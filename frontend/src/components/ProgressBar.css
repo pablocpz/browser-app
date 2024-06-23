@@ -1,0 +1,10 @@
+.progress-bar {
+  width: 100%; /* Full width of the container */
+  background-color: #eee; /* Background color of the progress bar container */
+}
+
+.progress {
+  height: 20px; /* Fixed height of the progress bar */
+  background-color: #007bff; /* Color of the progress bar */
+  transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
+}
