@@ -21,9 +21,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
+# Copy sample images
+COPY sample_images /backend/sample_images
+
 # Set the working directory
 WORKDIR /backend
 
 # Command to run the application
 EXPOSE 8000
-CMD ["python", "-m", "uvicorn", "sam_server.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "sam_server.app:app", "--host", "0.0.0.0", "--port", "8000"]

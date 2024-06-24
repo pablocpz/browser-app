@@ -55,7 +55,7 @@ try:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["https://browser-ai-demo.vercel.app", "https://browser-ai-demo-c9bevc48dh7c.code.run", "http://localhost:5173"],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -330,15 +330,21 @@ try:
                 logger.error(f"SAMPLE_IMAGES_DIR does not exist: {SAMPLE_IMAGES_DIR}")
                 return JSONResponse(content={"error": "Sample images directory not found"}, status_code=404)
             
-            for filename in os.listdir(SAMPLE_IMAGES_DIR):
+            file_list = os.listdir(SAMPLE_IMAGES_DIR)
+            logger.debug(f"Files in SAMPLE_IMAGES_DIR: {file_list}")
+            
+            for filename in file_list:
                 logger.debug(f"Processing file: {filename}")
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                     file_path = os.path.join(SAMPLE_IMAGES_DIR, filename)
                     logger.debug(f"Reading file: {file_path}")
-                    with open(file_path, "rb") as image_file:
-                        encoded_string = base64.b64encode(image_file.read()).decode()
-                        images.append(encoded_string)
-                        logger.debug(f"Encoded image: {filename}")
+                    try:
+                        with open(file_path, "rb") as image_file:
+                            encoded_string = base64.b64encode(image_file.read()).decode()
+                            images.append(encoded_string)
+                            logger.debug(f"Encoded image: {filename}")
+                    except Exception as file_error:
+                        logger.error(f"Error reading file {filename}: {str(file_error)}")
             
             logger.debug(f"Total images processed: {len(images)}")
             return JSONResponse(content={"images": images}, status_code=200)
