@@ -1,14 +1,13 @@
 // src/lib/detect/detection.ts
 import {
   getRecognitionsFromAPI as getRecognitionsFromAPI,
-
 } from "./embeddings";
 import Criminal from "@/types/criminal";
 import DetectedCriminal from "@/types/detectedCriminal";
-
+import { API_BASE_URL } from '@/config';
 
 async function loadCriminalImages(criminalName: String) {
-  const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
+  const response = await fetch(`${API_BASE_URL}/list-criminals/`);
   const loadedCriminals = (await response.json()) as Criminal[];
   console.log("loaded criminals", loadedCriminals);
 
