@@ -44,7 +44,7 @@ try:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["https://browser-ai-demo.vercel.app", "https://browser-ai-demo-c9bevc48m-neuralroots-projects.vercel.app", "http://localhost:5173"],
+        allow_origins=["https://browser-ai-demo.vercel.app", "https://browser-ai-demo-c9bevc48dh7c.code.run", "http://localhost:5173"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -52,7 +52,8 @@ try:
     
     API_BASE_URL = 'https://p01--browser-demo-backend--tjsmcp28dh7c.code.run'
     
-    CRIMINAL_DATA_DIR = "/backend/criminal_data"
+    CRIMINAL_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "criminal_data")
+    SAMPLE_IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sample_images")
 
     # Mount the criminal data directory to serve static files
     app.mount("/criminal_data", StaticFiles(directory=CRIMINAL_DATA_DIR), name="criminal_data")
@@ -295,7 +296,6 @@ try:
 
         if not os.path.exists(criminal_dir):
             print(f"Directory not found for criminal: {criminal_name}")
-
             return JSONResponse(content={"error": "Criminal not found"}, status_code=404)
 
         images = []
@@ -308,18 +308,15 @@ try:
     @app.get("/get-images/")
     async def get_images():
         
-        sample_images_dir = "../../sample_images"
-        images = []
-        
         try:
-            for filename in os.listdir(sample_images_dir):
+            images = []
+            
+            for filename in os.listdir(SAMPLE_IMAGES_DIR):
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                    file_path = os.path.join(sample_images_dir, filename)
+                    file_path = os.path.join(SAMPLE_IMAGES_DIR, filename)
                     with open(file_path, "rb") as image_file:
                         encoded_string = base64.b64encode(image_file.read()).decode()
                         images.append(encoded_string)
-                        
-                        print("yeag")
             
             return JSONResponse(content={"images": images}, status_code=200)
         except Exception as e:
@@ -336,5 +333,3 @@ try:
 except ImportError as e:
     print(f"Error importing required libraries: {e}")
     sys.exit(1)
-
-
