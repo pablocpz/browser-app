@@ -10,3 +10,4 @@ tf-keras
 torch
 torchvision
 opencv-python-headless
+aiofiles

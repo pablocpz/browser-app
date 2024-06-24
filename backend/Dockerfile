@@ -21,5 +21,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
+# Create the criminal_data directory
+RUN mkdir -p /app/criminal_data
+
+# Set the working directory
+WORKDIR /app
+
 # Command to run the application
 CMD ["uvicorn", "sam_server.app:app", "--host", "0.0.0.0", "--port", "8000"]
