@@ -28,4 +28,5 @@ RUN mkdir -p /app/criminal_data
 WORKDIR /app
 
 # Command to run the application
-CMD uvicorn sam_server.app:app --host 0.0.0.0 --port $PORT
+EXPOSE 8000
+CMD ["uvicorn", "sam_server.app:app", "--host", "0.0.0.0", "--port", "8000"]
