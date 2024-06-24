@@ -1,5 +1,8 @@
 FROM python:3.11-slim
 
+WORKDIR /backend
+#it's not the working dir of the runtime
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
@@ -10,19 +13,18 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /backend
 
 # Copy only requirements to cache them in docker layer
 COPY requirements.txt .
+
+COPY . .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
-COPY . .
 
 # Set the working directory
-WORKDIR /backend
 
 # Command to run the application
 EXPOSE 8000
