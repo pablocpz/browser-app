@@ -47,7 +47,7 @@ try:
         allow_origins=[
             "https://browser-ai-demo.vercel.app",
             "https://browser-ai-demo-31l1x90s3-neuralroots-projects.vercel.app",
-            "p01--browser-demo-backend--tjsmcp28dh7c.code.run"
+            "https://p01--browser-demo-backend--tjsmcp28dh7c.code.run",
         ],
         allow_credentials=True,
         allow_methods=["*"],
