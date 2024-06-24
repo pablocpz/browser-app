@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /backend
 
 # Copy only requirements to cache them in docker layer
 COPY requirements.txt .
@@ -21,13 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Create the criminal_data directory
-RUN mkdir -p /app/criminal_data
-
 # Set the working directory
-WORKDIR /app
+WORKDIR /backend/sam_server
 
 # Command to run the application
 EXPOSE 8000
-CMD ["uvicorn", "sam_server.app:app", "--host", "0.0.0.0", "--port", "8000"]
-
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

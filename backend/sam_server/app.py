@@ -52,11 +52,7 @@ try:
     
     API_BASE_URL = 'https://p01--browser-demo-backend--tjsmcp28dh7c.code.run'
     
-    # CRIMINAL_DATA_DIR = "/../../criminal_data"
-    CRIMINAL_DATA_DIR = "/app/criminal_data"
-    # CRIMINAL_DATA_DIR = "C:/Users/pablo/Mi unidad/Neural Networks/project/react part/object-detection-app LAST but without btns/criminal_data"
-    # CRIMINAL_DATA_DIR = "/../../criminal_data"
-
+    CRIMINAL_DATA_DIR = "/backend/criminal_data"
 
     # Mount the criminal data directory to serve static files
     app.mount("/criminal_data", StaticFiles(directory=CRIMINAL_DATA_DIR), name="criminal_data")
@@ -293,22 +289,25 @@ try:
         Returns:
             JSONResponse: A JSON response containing the list of image URLs.
         """
-        print(f"Received request for criminal: {criminal_name}")
         criminal_dir = os.path.join(CRIMINAL_DATA_DIR, criminal_name)
+        print(f"Received request for criminal: {criminal_name}")
         print(f"Looking for directory: {criminal_dir}")
+
         if not os.path.exists(criminal_dir):
             print(f"Directory not found for criminal: {criminal_name}")
+
             return JSONResponse(content={"error": "Criminal not found"}, status_code=404)
-        
+
         images = []
         for filename in os.listdir(criminal_dir):
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                images.append(f"{API_BASE_URL}/criminal_data/{criminal_name}/{filename}")
+                images.append(f"/criminal_data/{criminal_name}/{filename}")
 
         return JSONResponse(content={"images": images}, status_code=200)
 
     @app.get("/get-images/")
     async def get_images():
+        
         sample_images_dir = "../../sample_images"
         images = []
         
