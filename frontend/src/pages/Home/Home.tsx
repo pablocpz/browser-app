@@ -24,9 +24,14 @@ const Home = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-
-        console.log("trying to get images")
-        const response = await fetch(`${API_BASE_URL}/get-images/`);
+        console.log("Fetching images from:", `${API_BASE_URL}/get-images/`);
+        const response = await fetch(`${API_BASE_URL}/get-images/`, {
+          mode: 'cors',
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         if (data.images) {
           setImages(data.images);
@@ -35,7 +40,7 @@ const Home = () => {
         }
       } catch (error) {
         console.error("Error fetching images:", error);
-        setError("Error fetching images");
+        setError(`Error fetching images: ${error instanceof Error ? error.message : String(error)}`);
       }
     };
 
@@ -44,14 +49,22 @@ const Home = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      
-      const response = await fetch(`${API_BASE_URL}/list-criminals/`);
-      const loadedCriminals = (await response.json()) as Criminal[];
-
-      console.log("loaded criminals", loadedCriminals)
-      setCriminals(loadedCriminals);
-
-      console.log("setted criminals", criminals)
+      try {
+        console.log("Fetching criminals from:", `${API_BASE_URL}/list-criminals/`);
+        const response = await fetch(`${API_BASE_URL}/list-criminals/`, {
+          mode: 'cors',
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const loadedCriminals = await response.json();
+        console.log("Loaded criminals:", loadedCriminals);
+        setCriminals(loadedCriminals);
+      } catch (error) {
+        console.error("Error loading criminals:", error);
+        setError(`Error loading criminals: ${error instanceof Error ? error.message : String(error)}`);
+      }
     };
 
     loadCriminals();

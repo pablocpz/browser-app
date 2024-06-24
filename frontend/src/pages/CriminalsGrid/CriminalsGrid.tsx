@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Criminal from "@/types/criminal";
 import "./CriminalsGrid.css";
+import { API_BASE_URL } from '@/config';
 
 const CriminalsGrid = () => {
   const [criminals, setCriminals] = useState<Criminal[]>([]);
@@ -11,7 +12,10 @@ const CriminalsGrid = () => {
   useEffect(() => {
     const fetchCriminals = async () => {
       try {
-        const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
+        const response = await fetch(`${API_BASE_URL}/list-criminals/`, {
+          mode: 'cors',
+          credentials: 'include'
+        });
         const data = await response.json();
         if (data) {
           console.log("Fetched criminals:", data);
@@ -36,7 +40,10 @@ const CriminalsGrid = () => {
 
   const fetchCriminalImages = async (criminalName: string) => {
     try {
-      const response = await fetch(`https://browser-backend-production.up.railway.app/get-criminal-images/${criminalName}`);
+      const response = await fetch(`${API_BASE_URL}/get-criminal-images/${criminalName}`, {
+        mode: 'cors',
+        credentials: 'include'
+      });
       const data = await response.json();
       if (data.images) {
         return data.images;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from '@/config';
 
 // const THRESHOLD_1 = 0.8; // Threshold for similarity acceptance
 
@@ -43,7 +44,7 @@ export async function getRecognitionsFromAPI(
 
   try {
     const axiosResponse = await axios.post(
-      "http://localhost:8000/process-image/",
+      `${API_BASE_URL}/process-image/`,
       formData,
       {
         headers: {
