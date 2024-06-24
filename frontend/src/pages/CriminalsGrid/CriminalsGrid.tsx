@@ -11,7 +11,7 @@ const CriminalsGrid = () => {
   useEffect(() => {
     const fetchCriminals = async () => {
       try {
-        const response = await fetch("http://localhost:8000/list-criminals/");
+        const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
         const data = await response.json();
         if (data) {
           console.log("Fetched criminals:", data);
@@ -36,7 +36,7 @@ const CriminalsGrid = () => {
 
   const fetchCriminalImages = async (criminalName: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/get-criminal-images/${criminalName}`);
+      const response = await fetch(`https://browser-backend-production.up.railway.app/get-criminal-images/${criminalName}`);
       const data = await response.json();
       if (data.images) {
         return data.images;

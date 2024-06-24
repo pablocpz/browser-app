@@ -12,7 +12,7 @@ const EditCriminal = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      const response = await fetch("http://localhost:8000/list-criminals/");
+      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
       const data = await response.json();
       setCriminals(data);
     };
@@ -32,7 +32,7 @@ const EditCriminal = () => {
     files.forEach((file) => formData.append("files", file));
 
     try {
-      const response = await fetch("http://localhost:8000/edit-criminal/", {
+      const response = await fetch("https://browser-backend-production.up.railway.app/edit-criminal/", {
         method: "POST",
         body: formData,
       });

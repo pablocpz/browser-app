@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch("http://localhost:8000/get-images/");
+        const response = await fetch("https://browser-backend-production.up.railway.app/get-images/");
         const data = await response.json();
         if (data.images) {
           setImages(data.images);
@@ -41,7 +41,7 @@ const Home = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      const response = await fetch("http://localhost:8000/list-criminals/");
+      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
       const loadedCriminals = (await response.json()) as Criminal[];
 
       console.log("loaded criminals", loadedCriminals)

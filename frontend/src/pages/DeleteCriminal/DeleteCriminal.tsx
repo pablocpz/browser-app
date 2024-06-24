@@ -11,7 +11,7 @@ const DeleteCriminal = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      const response = await fetch("http://localhost:8000/list-criminals/");
+      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
       const data = await response.json();
       setCriminals(data);
     };
@@ -24,7 +24,7 @@ const DeleteCriminal = () => {
     formData.append("name", selectedCriminal);
 
     try {
-      const response = await fetch("http://localhost:8000/delete-criminal/", {
+      const response = await fetch("https://browser-backend-production.up.railway.app/delete-criminal/", {
         method: "POST",
         body: formData,
       });
