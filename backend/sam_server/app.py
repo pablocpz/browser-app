@@ -38,7 +38,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://browser-ai-demo.vercel.app/",
+                   "https://browser-ai-demo-31l1x90s3-neuralroots-projects.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
