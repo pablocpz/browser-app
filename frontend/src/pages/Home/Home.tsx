@@ -24,6 +24,8 @@ const Home = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
+
+        console.log("trying to get images")
         const response = await fetch(`${API_BASE_URL}/get-images/`);
         const data = await response.json();
         if (data.images) {
@@ -42,6 +44,7 @@ const Home = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
+      
       const response = await fetch(`${API_BASE_URL}/list-criminals/`);
       const loadedCriminals = (await response.json()) as Criminal[];
 

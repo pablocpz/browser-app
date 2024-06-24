@@ -44,11 +44,7 @@ try:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "https://browser-ai-demo.vercel.app",
-            "https://browser-ai-demo-31l1x90s3-neuralroots-projects.vercel.app",
-            "https://p01--browser-demo-backend--tjsmcp28dh7c.code.run",
-        ],
+        allow_origins=["https://browser-ai-demo-edm87c51y-neuralroots-projects.vercel.app/", "https://browser-ai-demo.vercel.app"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -335,3 +331,4 @@ try:
 except ImportError as e:
     print(f"Error importing required libraries: {e}")
     sys.exit(1)
+
