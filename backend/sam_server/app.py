@@ -49,6 +49,9 @@ try:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    
+    API_BASE_URL = 'https://p01--browser-demo-backend--tjsmcp28dh7c.code.run'
+    
     # CRIMINAL_DATA_DIR = "/../../criminal_data"
     CRIMINAL_DATA_DIR = "/app/criminal_data"
     # CRIMINAL_DATA_DIR = "C:/Users/pablo/Mi unidad/Neural Networks/project/react part/object-detection-app LAST but without btns/criminal_data"
@@ -279,7 +282,7 @@ try:
 
         return JSONResponse(content=criminals)
 
-    @app.get("/get-criminal-images/{criminal_name}")
+    @app.get("/criminal-images/{criminal_name}")
     async def get_criminal_images(criminal_name: str):
         """
         Endpoint to get images for a given criminal name.
@@ -297,7 +300,7 @@ try:
         images = []
         for filename in os.listdir(criminal_dir):
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-                images.append(f"http://localhost:8000/criminal_data/{criminal_name}/{filename}")
+                images.append(f"{API_BASE_URL}/criminal_data/{criminal_name}/{filename}")
 
         return JSONResponse(content={"images": images}, status_code=200)
 
@@ -331,4 +334,5 @@ try:
 except ImportError as e:
     print(f"Error importing required libraries: {e}")
     sys.exit(1)
+
 

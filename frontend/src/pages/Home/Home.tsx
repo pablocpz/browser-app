@@ -7,6 +7,7 @@ import { urlToImageData } from "../../utils/imageConversion";
 import ProgressBar from "@/components/ProgressBar";
 import "./Home.css";
 import { API_BASE_URL } from '@/config';
+import axios from 'axios';
 
 const Home = () => {
   const [detectedObjects, setDetectedObjects] = useState<DetectedCriminal[]>([]);
@@ -51,16 +52,11 @@ const Home = () => {
     const loadCriminals = async () => {
       try {
         console.log("Fetching criminals from:", `${API_BASE_URL}/list-criminals/`);
-        const response = await fetch(`${API_BASE_URL}/list-criminals/`, {
-          mode: 'cors',
-          credentials: 'include'
+        const response = await axios.get(`${API_BASE_URL}/list-criminals/`, {
+          withCredentials: true
         });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const loadedCriminals = await response.json();
-        console.log("Loaded criminals:", loadedCriminals);
-        setCriminals(loadedCriminals);
+        console.log("Loaded criminals:", response.data);
+        setCriminals(response.data);
       } catch (error) {
         console.error("Error loading criminals:", error);
         setError(`Error loading criminals: ${error instanceof Error ? error.message : String(error)}`);

@@ -12,11 +12,17 @@ const CriminalsGrid = () => {
   useEffect(() => {
     const fetchCriminals = async () => {
       try {
+
+        console.log("trying to load grid...")
         const response = await fetch(`${API_BASE_URL}/list-criminals/`, {
           mode: 'cors',
           credentials: 'include'
         });
         const data = await response.json();
+
+        console.log("done"
+          
+        )
         if (data) {
           console.log("Fetched criminals:", data);
           const criminalsWithImages = await Promise.all(
@@ -40,7 +46,7 @@ const CriminalsGrid = () => {
 
   const fetchCriminalImages = async (criminalName: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/get-criminal-images/${criminalName}`, {
+      const response = await fetch(`${API_BASE_URL}/criminal-images/${criminalName}`, {
         mode: 'cors',
         credentials: 'include'
       });

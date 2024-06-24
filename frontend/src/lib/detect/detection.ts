@@ -6,18 +6,22 @@ import Criminal from "@/types/criminal";
 import DetectedCriminal from "@/types/detectedCriminal";
 import { API_BASE_URL } from '@/config';
 
-async function loadCriminalImages(criminalName: String) {
-  const response = await fetch(`${API_BASE_URL}/list-criminals/`);
-  const loadedCriminals = (await response.json()) as Criminal[];
-  console.log("loaded criminals", loadedCriminals);
-
-  // Find the criminal with the given name
-  const criminal = loadedCriminals.find(c => c.name === criminalName);
-  if (criminal) {
-    console.log(`Images for ${criminalName}:`, criminal.images);
-    return criminal.images;
-  } else {
-    console.log(`Criminal with name ${criminalName} not found.`);
+async function loadCriminalImages(criminalName: string) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/criminal-images/${criminalName}`, {
+      mode: 'cors',
+      credentials: 'include'
+    });
+    const data = await response.json();
+    if (data.images) {
+      console.log(`Images for ${criminalName}:`, data.images);
+      return data.images;
+    } else {
+      console.log(`No images found for ${criminalName}.`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`Error fetching images for ${criminalName}:`, error);
     return [];
   }
 }
@@ -62,4 +66,3 @@ export async function detect(
 
   return detectedCriminals;
 }
-
