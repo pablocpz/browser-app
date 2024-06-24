@@ -47,7 +47,7 @@ try:
         allow_origins=[
             "https://browser-ai-demo.vercel.app",
             "https://browser-ai-demo-31l1x90s3-neuralroots-projects.vercel.app",
-            "https://your-railway-app-name.up.railway.app"
+            "https://browser-backend-production.up.railway.app"
         ],
         allow_credentials=True,
         allow_methods=["*"],
@@ -326,8 +326,10 @@ try:
 
     if __name__ == "__main__":
         import uvicorn
+        import os
 
-        uvicorn.run(app, host="0.0.0.0", port=8000)
+        port = int(os.environ.get("PORT", 8000))
+        uvicorn.run(app, host="0.0.0.0", port=port)
 
 except ImportError as e:
     print(f"Error importing required libraries: {e}")
