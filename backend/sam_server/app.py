@@ -50,7 +50,7 @@ try:
         allow_headers=["*"],
     )
     # CRIMINAL_DATA_DIR = "/../../criminal_data"
-    CRIMINAL_DATA_DIR = "../../criminal_data"
+    CRIMINAL_DATA_DIR = "/app/criminal_data"
     # CRIMINAL_DATA_DIR = "C:/Users/pablo/Mi unidad/Neural Networks/project/react part/object-detection-app LAST but without btns/criminal_data"
     # CRIMINAL_DATA_DIR = "/../../criminal_data"
 
