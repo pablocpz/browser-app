@@ -62,3 +62,4 @@ export async function detect(
 
   return detectedCriminals;
 }
+

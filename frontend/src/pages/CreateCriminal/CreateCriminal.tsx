@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '@/config';
 
 const CreateCriminal = () => {
   const [name, setName] = useState("");
@@ -14,32 +15,51 @@ const CreateCriminal = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleConfirmSubmit = () => {
+    setShowConfirmation(false);
+    handleSubmit();
+  };
+
+  const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
+    if (event) event.preventDefault();
+    // setIsLoading(true);
+
     const formData = new FormData();
-    formData.append("name", name);
-    files.forEach((file) => formData.append("files", file));
-    const response = await fetch("http://localhost:8000/create-criminal/", {
-      method: "POST",
-      body: formData,
+    formData.append('name', name);
+    files.forEach((file) => {
+      formData.append('files', file);
     });
-    const data = await response.json();
-    setMessage(data.message);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/create-criminal/`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setMessage('Criminal created successfully');
+        setName('');
+        setFiles([]);
+      } else {
+        setMessage('Failed to create criminal');
+      }
+    } catch (error) {
+      console.error('Error creating criminal:', error);
+      setMessage('Error creating criminal');
+    } finally {
+      // setIsLoading(false);
+    }
   };
 
   const handleConfirm = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirmSubmit = () => {
-    setShowConfirmation(false);
-    handleSubmit();
-  };
-
   return (
     <div className="w-full flex justify-center">
       <div className="w-full max-w-md bg-gray-800 rounded-xl p-8 shadow-lg">
         <h1 className="text-3xl font-bold text-white mb-6">Create Criminal</h1>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-300">
               Name:

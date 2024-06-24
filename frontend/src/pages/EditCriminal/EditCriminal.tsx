@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Criminal from "@/types/criminal";
+import { API_BASE_URL } from '@/config';
 
 const EditCriminal = () => {
   const [criminals, setCriminals] = useState<Criminal[]>([]);
@@ -12,7 +13,7 @@ const EditCriminal = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
+      const response = await fetch(`${API_BASE_URL}/list-criminals/`);
       const data = await response.json();
       setCriminals(data);
     };
@@ -32,7 +33,7 @@ const EditCriminal = () => {
     files.forEach((file) => formData.append("files", file));
 
     try {
-      const response = await fetch("https://browser-backend-production.up.railway.app/edit-criminal/", {
+      const response = await fetch(`${API_BASE_URL}/edit-criminal/`, {
         method: "POST",
         body: formData,
       });

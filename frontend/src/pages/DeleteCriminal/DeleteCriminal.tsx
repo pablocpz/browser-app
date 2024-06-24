@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Criminal from "@/types/criminal";
+import { API_BASE_URL } from '@/config';
 
 const DeleteCriminal = () => {
   const [criminals, setCriminals] = useState<Criminal[]>([]);
@@ -10,30 +11,38 @@ const DeleteCriminal = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadCriminals = async () => {
-      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
-      const data = await response.json();
-      setCriminals(data);
+    const fetchCriminals = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/list-criminals/`);
+        const data = await response.json();
+        setCriminals(data);
+      } catch (error) {
+        console.error('Error fetching criminals:', error);
+      }
     };
 
-    loadCriminals();
+    fetchCriminals();
   }, []);
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("name", selectedCriminal);
-
+  const handleDelete = async (criminalName: string) => {
     try {
-      const response = await fetch("https://browser-backend-production.up.railway.app/delete-criminal/", {
-        method: "POST",
+      const formData = new FormData();
+      formData.append('name', criminalName);
+
+      const response = await fetch(`${API_BASE_URL}/delete-criminal/`, {
+        method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
-      setMessage(data.message);
+      if (response.ok) {
+        setCriminals(criminals.filter((criminal) => criminal.name !== criminalName));
+        setMessage(`Criminal ${criminalName} deleted successfully`);
+      } else {
+        setMessage(`Failed to delete criminal ${criminalName}`);
+      }
     } catch (error) {
-      console.error("Error:", error);
-      setMessage("Error deleting criminal");
+      console.error('Error deleting criminal:', error);
+      setMessage(`Error deleting criminal ${criminalName}`);
     }
   };
 
@@ -43,7 +52,7 @@ const DeleteCriminal = () => {
 
   const handleConfirmSubmit = () => {
     setShowConfirmation(false);
-    handleSubmit();
+    handleDelete(selectedCriminal);
   };
 
   return (

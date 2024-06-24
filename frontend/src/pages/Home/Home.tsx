@@ -6,6 +6,7 @@ import { detect } from "@/lib/detect/detection";
 import { urlToImageData } from "../../utils/imageConversion";
 import ProgressBar from "@/components/ProgressBar";
 import "./Home.css";
+import { API_BASE_URL } from '@/config';
 
 const Home = () => {
   const [detectedObjects, setDetectedObjects] = useState<DetectedCriminal[]>([]);
@@ -23,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch("https://browser-backend-production.up.railway.app/get-images/");
+        const response = await fetch(`${API_BASE_URL}/get-images/`);
         const data = await response.json();
         if (data.images) {
           setImages(data.images);
@@ -41,7 +42,7 @@ const Home = () => {
 
   useEffect(() => {
     const loadCriminals = async () => {
-      const response = await fetch("https://browser-backend-production.up.railway.app/list-criminals/");
+      const response = await fetch(`${API_BASE_URL}/list-criminals/`);
       const loadedCriminals = (await response.json()) as Criminal[];
 
       console.log("loaded criminals", loadedCriminals)
