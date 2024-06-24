@@ -321,19 +321,29 @@ try:
 
     @app.get("/get-images/")
     async def get_images():
-        
+        logger.debug("Entering get_images endpoint")
         try:
             images = []
+            logger.debug(f"SAMPLE_IMAGES_DIR: {SAMPLE_IMAGES_DIR}")
+            
+            if not os.path.exists(SAMPLE_IMAGES_DIR):
+                logger.error(f"SAMPLE_IMAGES_DIR does not exist: {SAMPLE_IMAGES_DIR}")
+                return JSONResponse(content={"error": "Sample images directory not found"}, status_code=404)
             
             for filename in os.listdir(SAMPLE_IMAGES_DIR):
+                logger.debug(f"Processing file: {filename}")
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                     file_path = os.path.join(SAMPLE_IMAGES_DIR, filename)
+                    logger.debug(f"Reading file: {file_path}")
                     with open(file_path, "rb") as image_file:
                         encoded_string = base64.b64encode(image_file.read()).decode()
                         images.append(encoded_string)
+                        logger.debug(f"Encoded image: {filename}")
             
+            logger.debug(f"Total images processed: {len(images)}")
             return JSONResponse(content={"images": images}, status_code=200)
         except Exception as e:
+            logger.error(f"Error in get_images: {str(e)}")
             return JSONResponse(content={"error": str(e)}, status_code=500)
 
     @app.get("/")
