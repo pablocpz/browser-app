@@ -293,10 +293,13 @@ try:
         Returns:
             JSONResponse: A JSON response containing the list of image URLs.
         """
+        print(f"Received request for criminal: {criminal_name}")
         criminal_dir = os.path.join(CRIMINAL_DATA_DIR, criminal_name)
+        print(f"Looking for directory: {criminal_dir}")
         if not os.path.exists(criminal_dir):
+            print(f"Directory not found for criminal: {criminal_name}")
             return JSONResponse(content={"error": "Criminal not found"}, status_code=404)
-
+        
         images = []
         for filename in os.listdir(criminal_dir):
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
