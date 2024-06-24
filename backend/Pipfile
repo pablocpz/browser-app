@@ -11,6 +11,9 @@ python-multipart = "*"
 aiofiles = "*"
 uvicorn = "*"
 fastapi-cors = "*"
+numpy = "*"
+pandas = "*"
+deepface = "*"
 
 [dev-packages]
 
