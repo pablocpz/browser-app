@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DetectedCriminal from "@/types/detectedCriminal";
 import Criminal from "@/types/criminal";
 import { detect } from "@/lib/detect/detection";
-import { imageDataToUrl, urlToImageData } from "../../utils/imageConversion";
+import { urlToImageData } from "../../utils/imageConversion";
 import ProgressBar from "@/components/ProgressBar";
 import "./Home.css";
 

@@ -37,3 +37,4 @@
 **/*.sln
 **/*.sw?
 # End Generation Here
+.vercel

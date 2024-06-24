@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ProgressBar from "@/components/ProgressBar";
-import { imageDataToUrl } from "@/utils/imageConversion";
 import DetectedCriminal from "@/types/detectedCriminal";
 import "./Results.css"; // Import the CSS file
 
