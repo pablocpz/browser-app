@@ -4,9 +4,20 @@ This is the main file for the SAM model hosting server.
 
 import os
 import sys
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 # Add the project root to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+sys.path.append(backend_dir)
+
+logger.debug(f"Current directory: {current_dir}")
+logger.debug(f"Backend directory: {backend_dir}")
+logger.debug(f"Python path: {sys.path}")
 
 # Suppress TensorFlow INFO and WARNING messages
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -52,8 +63,11 @@ try:
     
     API_BASE_URL = 'https://p01--browser-demo-backend--tjsmcp28dh7c.code.run'
     
-    CRIMINAL_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "criminal_data")
-    SAMPLE_IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sample_images")
+    CRIMINAL_DATA_DIR = os.path.join(backend_dir, "criminal_data")
+    SAMPLE_IMAGES_DIR = os.path.join(backend_dir, "sample_images")
+
+    logger.debug(f"CRIMINAL_DATA_DIR: {CRIMINAL_DATA_DIR}")
+    logger.debug(f"SAMPLE_IMAGES_DIR: {SAMPLE_IMAGES_DIR}")
 
     # Mount the criminal data directory to serve static files
     app.mount("/criminal_data", StaticFiles(directory=CRIMINAL_DATA_DIR), name="criminal_data")
