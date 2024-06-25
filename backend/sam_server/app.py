@@ -56,18 +56,16 @@ try:
     app.add_middleware(
         CORSMiddleware,
         
-        allow_origins=["*"],
-        
-        # "https://browser-ai-demo.vercel.app",
-        #                "https://browser-ai-demo-c9bevc48dh7c.code.run",
-        #                "http://localhost:5173"
+        allow_origins=["https://browser-ai-demo.vercel.app",
+                       "https://browser-web-app-demo-bra8mo9ge-neuralroots-projects.vercel.app/",
+                       "http://localhost:5173"],
                        
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
     
-    API_BASE_URL = 'https://p01--browser-demo-backend--tjsmcp28dh7c.code.run'
+    API_BASE_URL = 'l'
     
     CRIMINAL_DATA_DIR = os.path.join(backend_dir, "criminal_data")
     SAMPLE_IMAGES_DIR = os.path.join(backend_dir, "sample_images")
