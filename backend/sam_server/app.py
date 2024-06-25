@@ -56,9 +56,7 @@ try:
     app.add_middleware(
         CORSMiddleware,
         
-        allow_origins=["https://browser-web-app-demo.vercel.app/",
-                       "https://browser-web-app-demo-bz6qeameh-neuralroots-projects.vercel.app",
-                       "http://localhost:5173"],
+        allow_origins=["*"],
                        
         allow_credentials=True,
         allow_methods=["*"],
